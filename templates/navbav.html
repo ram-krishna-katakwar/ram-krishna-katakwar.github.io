@@ -1,0 +1,225 @@
+{% block navbar %}
+<div class="dark:text-white dark:text-opacity-80 xl:mx-72 z-0">
+    <nav class="py-4 px-6 flex flex-col sm:flex-row" >
+        <div class="flex-auto"> 
+            <h1 class="text-2xl font-semibold" ><a href="/">Ram</a></h1>
+        </div>
+        <ul class="flex flex-row px-1 py-2 sm:py-0">
+            <li class="sm:px-2" >
+                <a class="cursor-pointer" id="theme-toggle" >
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </a>
+            </li>
+            <li class="px-2">
+                <a class="text-1xl border-b-2 border-transparent hover:border-gray-800 dark:hover:border-white cursor-pointer" id="contact">
+                    <span>Contact</span>
+                </a>
+                <div id ="contact-form" class="border hidden border-gray-400 rounded-md p-3 flex-col fixed z-100 bg-white dark:bg-blackish sm:-mx-40 my-2">
+                    <h1 class="text-lg">Contact me</h1>
+                    <div class="flex my-2 items-center">
+                        <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                            <input type="checkbox" name="toggle" id="toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+                            <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                        </div>
+                        <label for="toggle" class="text-xs text-gray-700 dark:text-white">Encrypt message</label>
+                    </div>
+                    <form class="flex flex-col dark:text-black" id="contactForm" >
+                        <input class="p-2 rounded-md flex-grow border border-gray-600" type="email" placeholder="Email" name="_replyto"/>
+                        <textarea id="messageforcontact" class="my-2 p-2 h-64 rounded-md flex-grow border border-gray-600" name="message" form="contactForm" type="text" placeholder="Message"></textarea>
+                        <button class="rounded-md bg-blue-300 p-2" type="submit" value="Submit">Submit</button>
+                    </form>
+                </div>
+            </li>
+            <li class="px-2" >
+                <a class="text-1xl border-b-2 border-transparent hover:border-gray-800 dark:hover:border-white" target="_blank" href="https://ram-krishna-katakwar.github.io/blog/">
+                    <span>Blog</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <script>
+        // set initial state
+        var button = document.getElementById("theme-toggle");
+        var sun = document.getElementById("sun");
+        var moon = document.getElementById("moon");
+        var root = document.getElementsByTagName('html')[0]
+        var key = "dark";
+
+        var contact = document.getElementById("contact");
+        var contactForm = document.getElementById("contact-form");
+
+        function dar() {
+            sun.style.display = "none";
+            moon.style.display = "block";
+            root.classList.add("dark");
+            localStorage.setItem(key, "true");
+        }
+
+        function li() {
+            sun.style.display = "block";
+            moon.style.display = "none";
+            root.classList.remove("dark");
+            localStorage.setItem(key, "false");
+        }
+
+        if (localStorage.getItem(key) === null) {
+            li();
+        }
+        else if (localStorage.getItem(key) === "false") {
+            li();
+        }
+        else {
+            dar();
+        }
+
+        button.onclick = function() {
+            if (localStorage.getItem(key) === "true") {
+                li();
+            }
+            else {
+                dar();
+            }
+        }
+
+        contact.onclick = function() {
+
+            if (contactForm.style.display == "flex") {
+                contactForm.style.display = "none";
+            }
+            else {
+                contactForm.style.display = "flex";
+            }
+        
+        }
+
+        document.onscroll = function() {
+            contactForm.style.display = "none";
+        }
+
+        // Encryption
+        async function encryptPGP() {
+
+const plt = `-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: Keybase OpenPGP v2.1.13
+Comment: https://keybase.io/crypto
+
+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
+=ELlw
+-----END PGP PUBLIC KEY BLOCK-----`;
+            
+                const pubkey = await openpgp.readKey({ armoredKey: plt });
+                const message = await openpgp.createMessage({ text: document.getElementById('messageforcontact').value });
+                const encrypted = await openpgp.encrypt({
+                    message: message, // input as Message object
+                    encryptionKeys: pubkey, // for encryption
+                });
+
+                return encrypted;
+        }
+
+        var toggleButton = document.getElementById("toggle");
+
+        // contact form
+        var contact = document.getElementById("contactForm");
+        contact.onsubmit = async(e) => {
+            e.preventDefault();
+
+            const params = new URLSearchParams([...new FormData(e.target).entries()]);
+
+            if (toggleButton.checked) {
+                encryptPGP(params.get("message")).then(r => {
+                    params.set("message", btoa(r));
+                }).then(r => {
+                    console.log(params.get("message"));
+                    fetch("https://formspree.io/f/moqyverl", {
+                        method: "POST",
+                        body: params
+                    }).then( function() {
+                        window.location.assign("https://formspree.io/thanks?language=en")
+                    });
+                });
+            }
+            else{
+                fetch("https://formspree.io/f/moqyverl", {
+                    method: "POST",
+                    body: params
+                }).then(function() {
+                    window.location.assign("https://formspree.io/thanks?language=en")
+                });
+            }
+        }
+
+    </script>
+</div>
+{% endblock navbar %}
