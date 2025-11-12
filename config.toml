@@ -1,5 +1,5 @@
 # The URL the site will be built for
-base_url = "ram-krishna-katakwar.github.io"
+base_url = "https://ram-krishna-katakwar.github.io"
 
 default_language = "en"
 
